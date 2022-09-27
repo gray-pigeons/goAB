@@ -1,0 +1,10 @@
+print("lua_1文件十大")
+local array= {
+    "key1","value1",1,2
+}
+local function A1()
+    for i, v in pairs(array) do
+        print(i,v)
+    end
+end
+A1()

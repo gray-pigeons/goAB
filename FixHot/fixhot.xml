@@ -1,0 +1,21 @@
+<Date>
+  <DownInfo name="fixhot" version="1.0.3" md5="123123123123">
+    <DirName1 name="Lua">
+      <FileName1>lua_1.lua.txt</FileName1>
+      <FileName2>lua_2.lua.txt</FileName2>
+    </DirName1>
+    <DirName2 name="AssetBundle">
+      <FileName1>ab1.txt</FileName1>
+      <FileName2>ab2.txt</FileName2>
+      <FileName3>ab3.txt</FileName3>
+    </DirName2>
+  </DownInfo>
+  <DeleteInfo >
+	  <DirName1 name="AA2" allDel=" true" />
+	  <DirName2 name="AssetBundle" allDel=" false" >
+		  <FileName1 >333.txt</FileName1>
+		  <FileName1 >1111.txt</FileName1>
+		  <FileName1 >2222.txt</FileName1>
+	  </DirName2>
+  </DeleteInfo>
+</Date>
