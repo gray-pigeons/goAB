@@ -29,7 +29,7 @@ func AddUser(username string, password string) {
 
 	handler := data.DBRead.QueryRow("select count(*) from user where name=?", username)
 	if handler.Err() != nil {
-
+		fmt.Println(handler.Err())
 	}
 	data.DBRead.Exec("")
 }
