@@ -23,13 +23,23 @@ func register(ctx *gin.Context) {
 		return
 	}
 
+	AddUser(username, password, ctx)
+
 }
 
-func AddUser(username string, password string) {
+func AddUser(username string, password string, ctx *gin.Context) {
 
-	handler := data.DBRead.QueryRow("select count(*) from user where name=?", username)
-	if handler.Err() != nil {
-		fmt.Println(handler.Err())
+	rspState["state"], rspState["text"] = "", ""
+	res2, err2 := data.DBRead.Exec("insert into `user`(name,pass)value(?,?);", username, password)
+	fmt.Println("addUser结果=", res2, err2)
+	if err2 != nil {
+		rspState["state"] = err2.Error()
+		rspState["text"] = "添加用户失败,用户名重复"
+		ctx.JSON(200, rspState)
+		return
 	}
-	data.DBRead.Exec("")
+
+	rspState["state"] = "10001"
+	rspState["text"] = "添加用户成功"
+	ctx.JSON(200, rspState)
 }

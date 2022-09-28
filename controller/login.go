@@ -85,9 +85,8 @@ func selectUser(name string) (User, error) {
 			fmt.Println("解析用户名和密码发生错误:", err2)
 			return User{}, err2
 		}
-
-		fmt.Println("查找结果:", id_, name_, pass_)
 	}
 	defer row.Close()
+	fmt.Println("login查找结果:", id_, name_, pass_)
 	return User{id_, name_, pass_}, nil
 }

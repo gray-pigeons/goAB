@@ -14,7 +14,7 @@ var DBRead *sql.DB
 const (
 	driveName  = "mysql"
 	dbUser     = "root"
-	dbPass     = "1111"
+	dbPass     = "root"
 	dbProtocol = "tcp"
 	dbAddress  = "127.0.0.1:3306"
 	dbName     = "go_ab"
