@@ -8,6 +8,10 @@ https://juejin.cn/post/6844903953772052488
 
 https://learnku.com/docs/go-database-sql/retrieving/9477#2058b1
 
+### sql 语法参考
+
+https://juejin.cn/post/6844903790571700231#heading-4
+
 #### 端口8080无法访问参考
 
 https://blog.csdn.net/qq_41240287/article/details/125544167
