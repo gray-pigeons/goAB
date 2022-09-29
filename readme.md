@@ -15,3 +15,11 @@
 #### 端口8080无法访问参考
 
 <https://blog.csdn.net/qq_41240287/article/details/125544167>
+
+### linux 下导入数据库sql文件
+
+<http://www.wjhsh.net/wjw1014-p-9523567.html>
+
+### nohup 后台运行与查看进程
+
+<https://www.cnblogs.com/sddai/p/14681585.html>

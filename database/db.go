@@ -26,7 +26,7 @@ func InitDB() {
 	dbSQL, err := sql.Open(driveName, conStr)
 	if err != nil {
 		fmt.Println("mysql open is warn :", err)
-		return
+		panic(err)
 	}
 	//数据库设置
 	dbSQL.SetConnMaxLifetime(60)
@@ -38,7 +38,7 @@ func InitDB() {
 	err2 := dbSQL.Ping()
 	if err2 != nil {
 		fmt.Println("mysql is connect ping failed :", err2)
-		return
+		panic(err2)
 	}
 	DBRead = dbSQL
 	fmt.Println("mysql is connect success")
