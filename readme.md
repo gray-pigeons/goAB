@@ -1,7 +1,7 @@
 ### 初始化go项目
-```xml`
+
 go mod init XXXX
-`
+
 <https://blog.csdn.net/qq_32212587/article/details/125390616>
 
 ### go gin框架使用教程
