@@ -23,3 +23,10 @@
 ### nohup 后台运行与查看进程
 
 <https://www.cnblogs.com/sddai/p/14681585.html>
+
+### protocal3 使用
+<https://zhuanlan.zhihu.com/p/82604466>
+<https://www.jianshu.com/p/9a1fb2495fbb>
+
+在proto源文件夹下执行：
+protoc --go_out . addressbook.proto
