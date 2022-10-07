@@ -1,9 +1,11 @@
 package server
 
 import (
+	"fmt"
 	"io"
 	"log"
 	"net"
+	"os"
 	"time"
 )
 
@@ -21,17 +23,27 @@ func InitServer() {
 			log.Println(conErr)
 			continue
 		}
-		handleConn(conn)
+		go handleConn(os.Stdout, conn)
 	}
 }
 
-func handleConn(conn net.Conn) {
+func handleConn(dst io.Writer, conn net.Conn) {
+	fmt.Println("收到新连接:", conn.RemoteAddr().String())
+	go jump(&conn)
 	defer conn.Close()
+	if _, err := io.Copy(dst, conn); err != nil {
+		log.Fatal(err)
+	}
+
+}
+
+func jump(conn *net.Conn) {
 	for {
-		_, err1 := io.WriteString(conn, time.Now().Format("15:04:05\n"))
+		str1 := "服务器心跳:" + time.Now().Format("15:04:05\n")
+		_, err1 := io.WriteString(*conn, str1)
 		if err1 != nil {
 			return
 		}
-		time.Sleep(1 * time.Second)
+		time.Sleep(12 * time.Second)
 	}
 }

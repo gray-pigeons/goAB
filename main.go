@@ -3,6 +3,7 @@ package main
 import (
 	controller "goAB/controller"
 	data "goAB/database"
+	"goAB/server"
 	"log"
 	"net/http"
 
@@ -11,7 +12,9 @@ import (
 )
 
 func main() {
+	server.InitServer()
 	data.InitDB()
+	// go client.InitClient()
 	router := gin.Default()
 	router.GET("/test", func(ctx *gin.Context) {
 		ctx.JSON(200, "嘿嘿嘿嘿")
