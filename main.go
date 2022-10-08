@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	controller "goAB/controller"
 	data "goAB/database"
 	"goAB/server"
@@ -12,7 +13,9 @@ import (
 )
 
 func main() {
+	fmt.Println("11111111-------------------")
 	server.InitServer()
+	fmt.Println("22222222-------------------")
 	data.InitDB()
 	// go client.InitClient()
 	router := gin.Default()

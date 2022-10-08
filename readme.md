@@ -36,3 +36,7 @@ go mod init XXXX
 
 在proto源文件夹下执行：
 protoc --go_out . addressbook.proto
+
+
+### 简易聊天室功能
+<https://dude6.com/article/5167.html>
