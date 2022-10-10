@@ -16,7 +16,12 @@ namespace goABClient
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LoginPage());
+            LoginPage loginPage = new LoginPage();
+            loginPage.ShowDialog();
+            if (loginPage.DialogResult==DialogResult.OK)
+            {
+                Application.Run(new MainPage());
+            }
         }
     }
 }

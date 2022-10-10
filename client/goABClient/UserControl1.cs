@@ -10,16 +10,11 @@ using System.Windows.Forms;
 
 namespace goABClient
 {
-    public partial class MainPage : Form
+    public partial class UserControl1 : UserControl
     {
-        public MainPage()
+        public UserControl1()
         {
             InitializeComponent();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

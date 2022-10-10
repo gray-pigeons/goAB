@@ -26,6 +26,7 @@ func InitDB() {
 	dbSQL, err := sql.Open(driveName, conStr)
 	if err != nil {
 		fmt.Println("mysql open is warn :", err)
+		defer dbSQL.Close()
 		panic(err)
 	}
 	//数据库设置
@@ -38,6 +39,7 @@ func InitDB() {
 	err2 := dbSQL.Ping()
 	if err2 != nil {
 		fmt.Println("mysql is connect ping failed :", err2)
+		defer dbSQL.Close()
 		panic(err2)
 	}
 	DBRead = dbSQL
