@@ -10,6 +10,10 @@ go mod init XXXX
 
 <https://juejin.cn/post/6844903953772052488>
 
+### go gin 框架官方教程
+
+<https://gin-gonic.com/docs/>
+
 ### go sql 参考
 
 <https://learnku.com/docs/go-database-sql/retrieving/9477#2058b1>
