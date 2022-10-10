@@ -1,0 +1,10 @@
+C:\Users\Administer\Desktop\AB\goAB\goAB\client\goABClient\bin\Debug\goABClient.exe.config
+C:\Users\Administer\Desktop\AB\goAB\goAB\client\goABClient\bin\Debug\goABClient.exe
+C:\Users\Administer\Desktop\AB\goAB\goAB\client\goABClient\bin\Debug\goABClient.pdb
+C:\Users\Administer\Desktop\AB\goAB\goAB\client\goABClient\obj\Debug\goABClient.csproj.AssemblyReference.cache
+C:\Users\Administer\Desktop\AB\goAB\goAB\client\goABClient\obj\Debug\goABClient.Form1.resources
+C:\Users\Administer\Desktop\AB\goAB\goAB\client\goABClient\obj\Debug\goABClient.Properties.Resources.resources
+C:\Users\Administer\Desktop\AB\goAB\goAB\client\goABClient\obj\Debug\goABClient.csproj.GenerateResource.cache
+C:\Users\Administer\Desktop\AB\goAB\goAB\client\goABClient\obj\Debug\goABClient.csproj.CoreCompileInputs.cache
+C:\Users\Administer\Desktop\AB\goAB\goAB\client\goABClient\obj\Debug\goABClient.exe
+C:\Users\Administer\Desktop\AB\goAB\goAB\client\goABClient\obj\Debug\goABClient.pdb

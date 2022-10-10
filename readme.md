@@ -39,4 +39,10 @@ protoc --go_out . addressbook.proto
 
 
 ### 简易聊天室功能
+
 <https://dude6.com/article/5167.html>
+
+
+### go 长连接和短连接
+
+<https://blog.csdn.net/cljdsc/article/details/125027270>
