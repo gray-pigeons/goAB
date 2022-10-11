@@ -14,7 +14,7 @@ var DBRead *sql.DB
 const (
 	driveName  = "mysql"
 	dbUser     = "root"
-	dbPass     = "root"
+	dbPass     = "1111"
 	dbProtocol = "tcp"
 	dbAddress  = "127.0.0.1:3306"
 	dbName     = "go_ab"
@@ -26,7 +26,7 @@ func InitDB() {
 	dbSQL, err := sql.Open(driveName, conStr)
 	if err != nil {
 		fmt.Println("mysql open is warn :", err)
-		defer dbSQL.Close()
+		dbSQL.Close()
 		panic(err)
 	}
 	//数据库设置
@@ -38,8 +38,9 @@ func InitDB() {
 	//连接测试
 	err2 := dbSQL.Ping()
 	if err2 != nil {
-		fmt.Println("mysql is connect ping failed :", err2)
-		defer dbSQL.Close()
+		fmt.Println("mysql is connect ping failed  :", err2)
+		fmt.Println("笔记本数据库密码与别处不同......")
+		dbSQL.Close()
 		panic(err2)
 	}
 	DBRead = dbSQL

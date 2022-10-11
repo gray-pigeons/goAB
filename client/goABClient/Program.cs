@@ -1,4 +1,5 @@
-﻿using System;
+﻿using goABClient.Scripts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,6 +17,9 @@ namespace goABClient
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            new SocketCilent(Config.IPAddress,Config.Port);
+
             LoginPage loginPage = new LoginPage();
             loginPage.ShowDialog();
             if (loginPage.DialogResult==DialogResult.OK)

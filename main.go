@@ -14,7 +14,7 @@ import (
 
 func main() {
 	fmt.Println("11111111-------------------")
-	server.InitServer()
+	go server.InitServer()
 	fmt.Println("22222222-------------------")
 	data.InitDB()
 	// go client.InitClient()

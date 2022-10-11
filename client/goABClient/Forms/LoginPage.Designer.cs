@@ -40,16 +40,17 @@ namespace goABClient
             // 
             // loginGroupBox1
             // 
+            this.loginGroupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.loginGroupBox1.Controls.Add(this.label2);
             this.loginGroupBox1.Controls.Add(this.label1);
             this.loginGroupBox1.Controls.Add(this.btn_login);
             this.loginGroupBox1.Controls.Add(this.txtBox_password);
             this.loginGroupBox1.Controls.Add(this.txtBox_username);
-            this.loginGroupBox1.Location = new System.Drawing.Point(621, 124);
-            this.loginGroupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.loginGroupBox1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.loginGroupBox1.Location = new System.Drawing.Point(316, 99);
             this.loginGroupBox1.Name = "loginGroupBox1";
-            this.loginGroupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.loginGroupBox1.Size = new System.Drawing.Size(293, 245);
+            this.loginGroupBox1.Size = new System.Drawing.Size(224, 203);
             this.loginGroupBox1.TabIndex = 0;
             this.loginGroupBox1.TabStop = false;
             this.loginGroupBox1.Text = "登录界面";
@@ -57,29 +58,26 @@ namespace goABClient
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 119);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(6, 95);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(68, 15);
+            this.label2.Size = new System.Drawing.Size(53, 12);
             this.label2.TabIndex = 4;
             this.label2.Text = "密  码：";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 60);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(6, 48);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(67, 15);
+            this.label1.Size = new System.Drawing.Size(53, 12);
             this.label1.TabIndex = 3;
             this.label1.Text = "用户名：";
             // 
             // btn_login
             // 
-            this.btn_login.Location = new System.Drawing.Point(105, 182);
-            this.btn_login.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_login.Location = new System.Drawing.Point(79, 146);
             this.btn_login.Name = "btn_login";
-            this.btn_login.Size = new System.Drawing.Size(100, 29);
+            this.btn_login.Size = new System.Drawing.Size(75, 23);
             this.btn_login.TabIndex = 2;
             this.btn_login.Text = "登录";
             this.btn_login.UseVisualStyleBackColor = true;
@@ -87,28 +85,27 @@ namespace goABClient
             // 
             // txtBox_password
             // 
-            this.txtBox_password.Location = new System.Drawing.Point(88, 115);
-            this.txtBox_password.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBox_password.Location = new System.Drawing.Point(66, 92);
             this.txtBox_password.Name = "txtBox_password";
-            this.txtBox_password.Size = new System.Drawing.Size(159, 25);
+            this.txtBox_password.Size = new System.Drawing.Size(120, 21);
             this.txtBox_password.TabIndex = 1;
             // 
             // txtBox_username
             // 
-            this.txtBox_username.Location = new System.Drawing.Point(88, 56);
-            this.txtBox_username.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBox_username.Location = new System.Drawing.Point(66, 45);
             this.txtBox_username.Name = "txtBox_username";
-            this.txtBox_username.Size = new System.Drawing.Size(159, 25);
+            this.txtBox_username.Size = new System.Drawing.Size(120, 21);
             this.txtBox_username.TabIndex = 0;
             // 
             // LoginPage
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1067, 562);
+            this.ClientSize = new System.Drawing.Size(626, 449);
             this.Controls.Add(this.loginGroupBox1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "LoginPage";
+            this.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.RightToLeftLayout = true;
             this.Text = "goABClient";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.loginGroupBox1.ResumeLayout(false);
