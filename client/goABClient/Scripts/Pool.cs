@@ -9,21 +9,21 @@ namespace goABClient.Scripts
 
 
     /// <summary>
-    /// 结构体数据对象池
+    /// 对象池
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class StructPool<T> where T : struct
+    public class ObjectPool<T> where T : class ,new()
     {
-        static StructPool<T> _instance;
+        static ObjectPool<T> _instance;
         private object lockObj = new object();
         Stack<T> stack = new Stack<T>();
 
-        public static StructPool<T> Instance {
+        public static ObjectPool<T> Instance {
             get 
             {
                 if (_instance==null)
                 {
-                    _instance = new StructPool<T>();
+                    _instance = new ObjectPool<T>();
                 }
                 return _instance;
             }
@@ -52,6 +52,7 @@ namespace goABClient.Scripts
         public void Put(T t)
         {
             Console.WriteLine("这里应该判断是否为空");
+            if (t == null) return;
             lock (lockObj)
             {
                 stack.Push(t);

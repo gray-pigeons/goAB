@@ -43,13 +43,12 @@ namespace goABClient.Scripts
     /// <summary>
     /// 消息事件
     /// </summary>
-    public struct MsgStruct
+    public class MsgEvent
     {
-        public  MsgEnumCode Code { get; set; }
+        public MsgEnumCode Code;
 
-        public  object Data { get; set; }
+        public object Data;
 
-        public static StructPool<MsgStruct> Pool = new StructPool<MsgStruct>();
     }
 
     /// <summary>
@@ -63,7 +62,7 @@ namespace goABClient.Scripts
 
         private object lockObj = new object();
 
-        private Queue<MsgStruct> que_ = new Queue<MsgStruct>();
+        private Queue<MsgEvent> que_ = new Queue<MsgEvent>();
 
         public static MsgQueue Instance
         {
@@ -81,7 +80,7 @@ namespace goABClient.Scripts
         /// 添加事件
         /// </summary>
         /// <param name="msgEvent"></param>
-        public void Push(MsgStruct msgEvent)
+        public void Push(MsgEvent msgEvent)
         {
             lock (lockObj)
             {
@@ -93,12 +92,12 @@ namespace goABClient.Scripts
         /// 移除事件
         /// </summary>
         /// <param name="msgEvent"></param>
-        public MsgStruct Pop(MsgStruct msgEvent)
+        public MsgEvent Pop(MsgEvent msgEvent)
         {
             lock (lockObj)
             {
                 if (que_.Count == 0)
-                    return new MsgStruct{ };
+                    return new MsgEvent{ };
                 return que_.Dequeue();
             }
         }

@@ -39,6 +39,17 @@ namespace goABClient.Scripts
             Task.Run(delegate { ReciveMsg(); });
         }
 
+        struct Person
+        {
+            public Person(string a) {
+                Name = Birth = a;
+                Age = 0;
+            }
+            public string Name { get; set; }
+            public int Age { get; set; }
+            public string Birth { get; set; }
+        }
+
         /// <summary>
         /// 接收消息
         /// </summary>
@@ -47,7 +58,12 @@ namespace goABClient.Scripts
             byte[] buffer = new byte[HEAD_SIZE];
             int recvLen, recvLeft = HEAD_SIZE, pos = 0;
             SocketError socketError;
-            MsgStruct msgStruct;
+
+
+
+            Person p = new Person();
+            p.Name = "1111";
+
             try
             {
                 //接收消息头数据
@@ -103,11 +119,10 @@ namespace goABClient.Scripts
                     Close("读取的消息为空");
                     return;
                 }
-                msgStruct = MsgStruct.Pool.Get();
+                MsgEvent msgStruct = ObjectPool<MsgEvent>.Instance.Get();
                 msgStruct.Code = MsgEnumCode.ConnectedSuccess;
                 msgStruct.Data = data;
                 MsgQueue.Instance.Push(msgStruct);
-                MsgStruct.Pool.Put(msgStruct);
 
             }
             catch (SocketException ex)
