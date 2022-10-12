@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace goABClient.Scripts
 {
@@ -13,42 +14,57 @@ namespace goABClient.Scripts
         private Socket client = null;
         private int HEAD_SIZE = 4;
 
-        public SocketCilent(string address,int port)
+
+
+        public SocketCilent()
         {
-             
-            Task.Run(delegate { InitClient(address, port);});
+            InitClient();
+        }
+
+        public void InitClient()
+        {
+            client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            ConnectServer();
+        }
+
+        private void ConnectServer()
+        {
+
+            if (client == null) InitClient();
+
+            Config.ConnectState = ConnEnumStateCode.Connecting;
+            client.BeginConnect(new IPEndPoint(IPAddress.Parse(Config.IPAddress), Config.Port), (connectCallBack) =>
+             {
+                 try
+                 {
+                    Socket socket = connectCallBack.AsyncState as Socket;
+                     socket.EndConnect(connectCallBack);
+                 }
+                 catch (SocketException scokErr)
+                 {
+                     Console.WriteLine(scokErr);
+                     Close("连接异常", string.Format("Error Code:{0},Error Message:{1}", scokErr.ErrorCode, scokErr.Message)
+       , MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                     return;
+                 }
+                 catch (Exception ex)
+                 {
+                     Console.WriteLine("connect server failed :" + ex);
+                     Close("连接中异常", string.Format("Error Message:{0}", ex.Message),
+                         MessageBoxButtons.OK, MessageBoxIcon.Error);
+                     return;
+                 }
+
+                 Config.ConnectState = ConnEnumStateCode.Connected;
+                 Console.WriteLine("连接成功!!!");
+                 Task.Run(delegate { ReciveMsg(); });
+
+             }, client);
 
         }
 
-        private void InitClient(string address, int port)
-        {
-            try
-            {
-                client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                client.Connect(new IPEndPoint(IPAddress.Parse(address), port));
-                Console.WriteLine("连接成功!!!");
-                Console.WriteLine(address, port);
 
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("connect server failed :"+ex);
-                throw;
-            }
-
-            Task.Run(delegate { ReciveMsg(); });
-        }
-
-        struct Person
-        {
-            public Person(string a) {
-                Name = Birth = a;
-                Age = 0;
-            }
-            public string Name { get; set; }
-            public int Age { get; set; }
-            public string Birth { get; set; }
-        }
 
         /// <summary>
         /// 接收消息
@@ -58,11 +74,6 @@ namespace goABClient.Scripts
             byte[] buffer = new byte[HEAD_SIZE];
             int recvLen, recvLeft = HEAD_SIZE, pos = 0;
             SocketError socketError;
-
-
-
-            Person p = new Person();
-            p.Name = "1111";
 
             try
             {
@@ -102,7 +113,8 @@ namespace goABClient.Scripts
                     recvLen = client.Receive(buffer, pos, recvLeft, SocketFlags.None, out socketError);
                     if (recvLen == 0)
                     {
-                        Close(string.Format("接收的消息头长度为:{0}", recvLen));
+                        Close();
+
                         return;
                     }
 
@@ -116,24 +128,28 @@ namespace goABClient.Scripts
                 //将数据放入消息队列中
                 if (data==null)
                 {
-                    Close("读取的消息为空");
+                    Close();
                     return;
                 }
-                MsgEvent msgStruct = ObjectPool<MsgEvent>.Instance.Get();
-                msgStruct.Code = MsgEnumCode.ConnectedSuccess;
-                msgStruct.Data = data;
-                MsgQueue.Instance.Push(msgStruct);
+
+                MsgEvent msgEvent = ObjectPool<MsgEvent>.Instance.Get();
+                msgEvent.Code = MsgEnumStateCode.ReadSuccess;
+                msgEvent.Data = data;
+                MsgQueue.Instance.Push(msgEvent);
 
             }
-            catch (SocketException ex)
+            catch (SocketException socketErr)
             {
-                Console.WriteLine("SocketException recive message is failed:", ex);
-                throw;
+                Console.WriteLine("SocketException recive message is failed:", socketErr);
+                Close("接收消息异常",string.Format("Error Code:{0},Error Message:{1}",socketErr.ErrorCode, socketErr.Message), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Exception recive message is failed:", ex);
-                throw;
+                Close("接收消息异常", string.Format("Error Message:{0}", ex.Message),MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+
             }
 
         }
@@ -141,10 +157,20 @@ namespace goABClient.Scripts
         /// <summary>
         /// 关闭连接
         /// </summary>
-        private void Close(object recvLen = null)
+        private void Close(string title=null, object content = null, MessageBoxButtons boxButtons = MessageBoxButtons.OK,MessageBoxIcon icon = MessageBoxIcon.None)
         {
-            Console.WriteLine(recvLen);
-            client.Close();
+            Console.WriteLine("关闭客户端");
+            if (!string.IsNullOrEmpty(title))
+            {
+                MessageBox.Show(content.ToString(), title, boxButtons, icon);
+            }
+
+            if (Config.ConnectState == ConnEnumStateCode.Connecting || client ==null ) return;
+
+                client.Disconnect(true);
+                client.Dispose();
+                client.Close();
+                Config.ConnectState = ConnEnumStateCode.DisConnect;
         }
 
 

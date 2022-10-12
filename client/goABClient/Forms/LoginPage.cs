@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using goABClient.Scripts;
+
 
 namespace goABClient
 {
@@ -30,6 +32,12 @@ namespace goABClient
 
             Console.WriteLine(username);
             Console.WriteLine(passworld);
+            
+            if (Config.ConnectState == ConnEnumStateCode.ConnectFailed || Config.ConnectState == ConnEnumStateCode.DisConnect)
+            {
+                new SocketCilent();
+            }
+
 
             if (username.Length>6&&passworld.Length>6)
             {

@@ -75,6 +75,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripts\AllEnum.cs" />
     <Compile Include="Scripts\Config.cs" />
     <Compile Include="Scripts\MsgQueue.cs" />
     <Compile Include="Scripts\Pool.cs" />

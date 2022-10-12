@@ -17,7 +17,6 @@ C:\Users\退一步越想越亏\Desktop\goAB\goAB\client\goABClient\obj\Debug\goA
 C:\Users\退一步越想越亏\Desktop\goAB\goAB\client\goABClient\obj\Debug\goABClient.exe
 C:\Users\退一步越想越亏\Desktop\goAB\goAB\client\goABClient\obj\Debug\goABClient.pdb
 C:\Users\退一步越想越亏\Desktop\goAB\goAB\client\goABClient\obj\Debug\goABClient.MainPage.resources
-C:\Users\退一步越想越亏\Desktop\goAB\goAB\client\goABClient\obj\Debug\goABClient.UserControl1.resources
 C:\Users\Administer\Desktop\AB\goAB\goAB\client\goABClient\obj\Debug\goABClient.MainPage.resources
 C:\Users\Administer\Desktop\AB\goAB\goAB\client\goABClient\obj\Debug\goABClient.LoginPage.resources
 C:\Users\Administer\Desktop\AB\goAB\goAB\client\goABClient\obj\Debug\goABClient.csproj.AssemblyReference.cache
