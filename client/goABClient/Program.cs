@@ -17,7 +17,8 @@ namespace goABClient
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            new SocketCilent();
+
+            SocketCilent.Instance.InitClient();
             LoginPage loginPage = new LoginPage();
             loginPage.ShowDialog();
             if (loginPage.DialogResult==DialogResult.OK)

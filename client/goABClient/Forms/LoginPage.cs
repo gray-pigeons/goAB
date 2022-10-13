@@ -30,13 +30,36 @@ namespace goABClient
             string username = txtBox_username.Text;
             string passworld = txtBox_password.Text;
 
-            Console.WriteLine(username);
-            Console.WriteLine(passworld);
-            
+            Console.WriteLine("username="+username);
+
             if (Config.ConnectState == ConnEnumStateCode.ConnectFailed || Config.ConnectState == ConnEnumStateCode.DisConnect)
             {
-                new SocketCilent();
+                SocketCilent.Instance.InitClient();
             }
+            int waitTime = 0;
+            bool successState = true;
+            while (successState)
+            {
+                if (Config.ConnectState == ConnEnumStateCode.Connected)
+                {
+                    successState = false;
+                }
+
+                Task.Delay(500); //毫秒
+                waitTime += 500;
+                if (waitTime >= 9000)
+                {
+                    if (Config.ConnectState != ConnEnumStateCode.Connected )
+                    {
+                        return;
+                    }
+                }
+            }
+                Console.WriteLine("pass="+passworld);
+
+
+            //发送登录消息
+
 
 
             if (username.Length>6&&passworld.Length>6)

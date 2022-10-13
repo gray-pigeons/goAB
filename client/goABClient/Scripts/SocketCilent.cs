@@ -14,12 +14,26 @@ namespace goABClient.Scripts
         private Socket client = null;
         private int HEAD_SIZE = 4;
 
+        private static SocketCilent _instance;
 
-
-        public SocketCilent()
+        public static SocketCilent Instance 
         {
-            InitClient();
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new SocketCilent();
+                }
+                return _instance;
+            }
         }
+
+
+        private SocketCilent()
+        {
+        }
+
+        
 
         public void InitClient()
         {
@@ -154,27 +168,65 @@ namespace goABClient.Scripts
 
         }
 
+
+        /// <summary>
+        /// 给服务端发送消息
+        /// </summary>
+        /// <param name="msgEvent"></param>
+        /// <returns></returns>
+        public void SendMsg(byte[] data)
+        {
+            if (data.Length > int.MaxValue - HEAD_SIZE)
+                throw new Exception("data is too long");
+
+            byte[] headBuf = SetMessgeLength(data.Length);
+            long totleLength = data.Length + HEAD_SIZE;
+            byte[] totleBuffer = new byte[totleLength];
+            headBuf.CopyTo(totleBuffer,0);
+            data.CopyTo(totleBuffer, headBuf.Length);
+
+            int needSendLen = totleBuffer.Length, alReadySendLen, pos = 0;
+            while (needSendLen > 0)
+            {
+                alReadySendLen = client.Send(totleBuffer, 0, needSendLen, SocketFlags.None, out SocketError socketError);
+                if (alReadySendLen < 0 || socketError != SocketError.Success)
+                    throw new SocketException((int)socketError);
+
+                needSendLen -= alReadySendLen;
+                pos += alReadySendLen;
+            }
+
+        }
+
         /// <summary>
         /// 关闭连接
         /// </summary>
-        private void Close(string title=null, object content = null, MessageBoxButtons boxButtons = MessageBoxButtons.OK,MessageBoxIcon icon = MessageBoxIcon.None)
+        private void Close(string title = null, object content = null, MessageBoxButtons boxButtons = MessageBoxButtons.OK, MessageBoxIcon icon = MessageBoxIcon.None)
         {
-            Console.WriteLine("关闭客户端");
+            Console.WriteLine("关闭客户端:" + title);
             if (!string.IsNullOrEmpty(title))
             {
                 MessageBox.Show(content.ToString(), title, boxButtons, icon);
             }
-
-            if (Config.ConnectState == ConnEnumStateCode.Connecting || client ==null ) return;
-
-                client.Disconnect(true);
-                client.Dispose();
-                client.Close();
-                Config.ConnectState = ConnEnumStateCode.DisConnect;
+            client.Dispose();
+            client.Close();
+            if (Config.ConnectState == ConnEnumStateCode.Connected)
+            {
+                client.Disconnect(false);
+            }
+            Config.ConnectState = ConnEnumStateCode.DisConnect;
         }
 
 
-
+        /// <summary>
+        /// 对消息头长度进行编码
+        /// </summary>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        private byte[] SetMessgeLength(int length)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// 对消息头进行解码得到消息体长度
