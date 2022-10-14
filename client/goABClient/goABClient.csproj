@@ -80,6 +80,7 @@
     <Compile Include="Scripts\MsgQueue.cs" />
     <Compile Include="Scripts\Pool.cs" />
     <Compile Include="Scripts\SocketCilent.cs" />
+    <Compile Include="Scripts\TestObjectPool.cs" />
     <EmbeddedResource Include="Forms\MainPage.resx">
       <DependentUpon>MainPage.cs</DependentUpon>
     </EmbeddedResource>
