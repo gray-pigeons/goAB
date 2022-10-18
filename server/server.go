@@ -9,7 +9,7 @@ import (
 )
 
 // 初始化tcp服务
-func InitServer() {
+func InitTcpServer() {
 
 	//获取本地ip地址
 	host := ":8081"

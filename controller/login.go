@@ -12,36 +12,46 @@ func init() {
 	controllerMap["/login"] = login
 }
 
+type loginReq struct {
+	Username string `json:"username,omitempty"`
+	Password string `json:"password,omitempty"`
+}
+
 // 登录
 func login(ctx *gin.Context) {
 
-	username := ctx.Request.FormValue("username")
-	password := ctx.Request.FormValue("password")
+	var req = new(loginReq)
+	err := ctx.BindJSON(req)
+	// username := ctx.Request.FormValue("username")
+	// password := ctx.Request.FormValue("password")
+	if err != nil {
+		ctx.JSON(400, nil)
+		return
+	}
+	fmt.Println("login-------", req.Username, req.Password, rspState)
 
-	fmt.Println("login-------", username, password, rspState)
-
-	checkLength(username, password)
+	checkLength(req.Username, req.Password)
 	if rspState["state"] != "" {
-		ctx.JSON(401, rspState)
+		ctx.JSON(200, rspState)
 		return
 	}
 	//判断用户名是否存在
-	isExist, err := selectUser(username)
+	isExist, err := selectUser(req.Username)
 	if err != nil {
 		ctx.JSON(500, "出错了")
 		return
 	}
-	if isExist.Username != username {
+	if isExist.Username != req.Password {
 		rspState["state"] = "1003"
 		rspState["text"] = "用户名不存在"
-		ctx.JSON(401, rspState)
+		ctx.JSON(200, rspState)
 		return
 	}
 
-	if isExist.Password != password {
+	if isExist.Password != req.Password {
 		rspState["state"] = "1003"
 		rspState["text"] = "密码错误"
-		ctx.JSON(401, rspState)
+		ctx.JSON(200, rspState)
 		return
 	}
 

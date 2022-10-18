@@ -47,7 +47,7 @@ namespace goABClient.Scripts
             if (client == null) InitClient();
 
             Config.ConnectState = ConnEnumStateCode.Connecting;
-            client.BeginConnect(new IPEndPoint(IPAddress.Parse(Config.IPAddress), Config.Port), (connectCallBack) =>
+            client.BeginConnect(new IPEndPoint(IPAddress.Parse(Config.IPAddress), Config.TcpPort), (connectCallBack) =>
              {
                  try
                  {
@@ -57,16 +57,18 @@ namespace goABClient.Scripts
                  catch (SocketException scokErr)
                  {
                      Console.WriteLine(scokErr);
-                     Close("连接异常", string.Format("Error Code:{0},Error Message:{1}", scokErr.ErrorCode, scokErr.Message)
-       , MessageBoxButtons.OK, MessageBoxIcon.Error);
 
+                     MessageBox.Show("连接异常", string.Format("Error Code:{0},Error Message:{1}", scokErr.ErrorCode, scokErr.Message),
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                     Close();
                      return;
                  }
                  catch (Exception ex)
                  {
                      Console.WriteLine("connect server failed :" + ex);
-                     Close("连接中异常", string.Format("Error Message:{0}", ex.Message),
+                     MessageBox.Show( string.Format("Error Message:{0}", ex.Message), "连接中异常",
                          MessageBoxButtons.OK, MessageBoxIcon.Error);
+                     Close();
                      return;
                  }
 
@@ -97,7 +99,8 @@ namespace goABClient.Scripts
                     recvLen = client.Receive(buffer, pos, recvLeft, SocketFlags.None, out socketError);
                     if (recvLen == 0)
                     {
-                        Close(string.Format("接收的消息头长度为:{0}",recvLen));
+                        Console.WriteLine(string.Format("接收的消息头长度为:{0}",recvLen));
+                        Close();
                         return;
                     }
 
@@ -128,7 +131,6 @@ namespace goABClient.Scripts
                     if (recvLen == 0)
                     {
                         Close();
-
                         return;
                     }
 
@@ -139,13 +141,15 @@ namespace goABClient.Scripts
                     pos += recvLen;
                 }
 
-                //将数据放入消息队列中
+
                 if (data==null)
                 {
                     Close();
+                    Console.WriteLine("接收的消息为null");
                     return;
                 }
 
+                //将数据放入消息队列中
                 MsgEvent msgEvent = ObjectPool<MsgEvent>.Instance.Get();
                 msgEvent.Code = MsgEnumStateCode.ReadSuccess;
                 msgEvent.Data = data;
@@ -155,13 +159,15 @@ namespace goABClient.Scripts
             catch (SocketException socketErr)
             {
                 Console.WriteLine("SocketException recive message is failed:", socketErr);
-                Close("接收消息异常",string.Format("Error Code:{0},Error Message:{1}",socketErr.ErrorCode, socketErr.Message), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("Error Code:{0},Error Message:{1}",socketErr.ErrorCode, socketErr.Message), "接收消息异常", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Close();
                 return;
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Exception recive message is failed:", ex);
-                Close("接收消息异常", string.Format("Error Message:{0}", ex.Message),MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show( string.Format("Error Message:{0}", ex.Message), "接收消息异常", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Close();
                 return;
 
             }
@@ -201,18 +207,17 @@ namespace goABClient.Scripts
         /// <summary>
         /// 关闭连接
         /// </summary>
-        private void Close(string title = null, object content = null, MessageBoxButtons boxButtons = MessageBoxButtons.OK, MessageBoxIcon icon = MessageBoxIcon.None)
+        private void Close()
         {
-            Console.WriteLine("关闭客户端:" + title);
-            if (!string.IsNullOrEmpty(title))
+            if (client!=null)
             {
-                MessageBox.Show(content.ToString(), title, boxButtons, icon);
-            }
-            client.Dispose();
-            client.Close();
-            if (Config.ConnectState == ConnEnumStateCode.Connected)
-            {
-                client.Disconnect(false);
+                client.Close();
+                client.Dispose();
+                if (Config.ConnectState == ConnEnumStateCode.Connected)
+                {
+                    client.Disconnect(false);
+                }
+                return;
             }
             Config.ConnectState = ConnEnumStateCode.DisConnect;
         }
@@ -223,19 +228,19 @@ namespace goABClient.Scripts
         /// </summary>
         /// <param name="length"></param>
         /// <returns></returns>
-        private byte[] SetMessgeLength(int length)
+        private byte[] SetMessgeLength(long length)
         {
-            throw new NotImplementedException();
+            return BitConverter.GetBytes(length);
         }
 
         /// <summary>
-        /// 对消息头进行解码得到消息体长度
+        /// 解码消息头
         /// </summary>
         /// <param name="buffer"></param>
         /// <returns></returns>
-        private long GetMessageLength(byte[] buffer)
+        private uint GetMessageLength(byte[] buffer)
         {
-            throw new NotImplementedException();
+            return BitConverter.ToUInt32(buffer,0);
         }
     }
 }

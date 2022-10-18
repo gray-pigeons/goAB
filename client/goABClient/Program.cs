@@ -18,12 +18,12 @@ namespace goABClient
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            SocketCilent.Instance.InitClient();
-            LoginPage loginPage = new LoginPage();
+            //SocketCilent.Instance.InitClient();
+            LoginForm loginPage = new LoginForm();
             loginPage.ShowDialog();
             if (loginPage.DialogResult==DialogResult.OK)
             {
-                Application.Run(new MainPage());
+                Application.Run(new MainForm());
             }
         }
     }

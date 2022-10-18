@@ -10,12 +10,10 @@ using System.Windows.Forms;
 
 namespace goABClient
 {
-    public partial class MainPage : Form
+    public partial class MainForm : Form
     {
 
-
-
-        public MainPage()
+        public MainForm()
         {
             InitializeComponent();
         }

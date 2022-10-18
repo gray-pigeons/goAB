@@ -5,6 +5,10 @@ import (
 	"goAB/pb"
 )
 
+func init() {
+	addPersonInfo()
+}
+
 // 添加个人信息
 func addPersonInfo() {
 	uuid := 1234
@@ -26,7 +30,7 @@ func addPersonInfo() {
 
 }
 
-// 查询个人信息
-func selectPersonInfo() {
-
-}
+// // 查询个人信息
+// func selectPersonInfo() {
+// 	fmt.Println()
+// }

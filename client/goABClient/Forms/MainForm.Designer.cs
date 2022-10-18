@@ -1,7 +1,7 @@
 ﻿
 namespace goABClient
 {
-    partial class MainPage
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.

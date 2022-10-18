@@ -4,8 +4,6 @@ import (
 	"fmt"
 	controller "goAB/controller"
 	data "goAB/database"
-	"goAB/server"
-	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -13,9 +11,8 @@ import (
 )
 
 func main() {
-	fmt.Println("11111111-------------------")
-	go server.InitServer()
-	fmt.Println("22222222-------------------")
+	// go server.InitTcpServer()
+	fmt.Println("1111-------------------")
 	data.InitDB()
 	// go client.InitClient()
 	router := gin.Default()
@@ -29,7 +26,6 @@ func main() {
 
 	err := router.Run()
 	if err != nil {
-		// fmt.Println(err)
-		log.Default().Fatalln(err)
+		fmt.Println(err)
 	}
 }

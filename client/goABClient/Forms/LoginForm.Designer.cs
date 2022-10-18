@@ -1,7 +1,7 @@
 ﻿
 namespace goABClient
 {
-    partial class LoginPage
+    partial class LoginForm
     {
         /// <summary>
         /// 必需的设计器变量。
