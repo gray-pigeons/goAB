@@ -81,9 +81,11 @@
     <Compile Include="Scripts\AllEnum.cs" />
     <Compile Include="Scripts\Config.cs" />
     <Compile Include="Scripts\MsgQueue.cs" />
+    <Compile Include="Scripts\Msg\Login.cs" />
     <Compile Include="Scripts\Pool.cs" />
     <Compile Include="Scripts\Net\SocketCilent.cs" />
     <Compile Include="Scripts\TestObjectPool.cs" />
+    <Compile Include="Scripts\Tools\HttpTool.cs" />
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

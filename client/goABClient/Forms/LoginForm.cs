@@ -5,7 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using goABClient.Scripts;
+using goABClient.Scripts.Msg;
+using goABClient.Scripts.Tools;
 using Newtonsoft.Json;
+using static System.Net.WebRequestMethods;
 
 namespace goABClient
 {
@@ -63,41 +66,16 @@ namespace goABClient
                 return;
             }
 
-            System.Net.ServicePointManager.Expect100Continue = false;
-            WebRequest loginReq = WebRequest.Create(string.Format("http://{0}:{1}/login",Config.IPAddress,Config.HttpPort));
-            string json = JsonConvert.SerializeObject(new User(username,passworld));
-            byte[] data=Encoding.UTF8.GetBytes(json);
-            loginReq.ContentType = "application/json";
-            loginReq.ContentLength = data.Length;
-            loginReq.Method ="POST";
 
-            //using (var reqStream = loginReq.GetRequestStream())
-            //{
-            //    reqStream.Write(data,0,data.Length);
-            //    using (var rsp = loginReq.GetResponse())
-            //    {
-            //        using (var rspStream = rsp.GetResponseStream())
-            //        {
-            //            using (var reader = new StreamReader(rspStream))
-            //            {
-            //                string rspData = reader.ReadToEnd();
-            //                Console.WriteLine(rspData);
-            //            }
-            //        }
-            //    }
-            //}
-            var reqStream = loginReq.GetRequestStream();
-            reqStream.Write(data, 0, data.Length);
-            using (var rsp = loginReq.GetResponse())
+            string rsp = HttpTool.PostHttp(GetLoginUrl(),new ReqLogin(username,passworld));
+            RspLogin rspLogin = JsonConvert.DeserializeObject<RspLogin>(rsp);
+            Console.WriteLine(rspLogin.State);
+            Console.WriteLine(rspLogin.Text);
+
+            if (rspLogin==null)
             {
-                using (var rspStream = rsp.GetResponseStream())
-                {
-                    using (var reader = new StreamReader(rspStream))
-                    {
-                        string rspData = reader.ReadToEnd();
-                        Console.WriteLine(rspData);
-                    }
-                }
+                MessageBox.Show("登录失败!!!","登录结果",MessageBoxButtons.OK);
+                DialogResult = DialogResult.None;
             }
 
             if (username.Length > 6 && passworld.Length > 6)
@@ -108,18 +86,14 @@ namespace goABClient
 
         }
 
-    }
 
 
-    class User
-    {
-        string name;
-        string pass;
-
-        public User(string name ,string pass)
+        string GetLoginUrl()
         {
-            this.name = name;
-            this.pass = pass;
+            return string.Format("http://{0}:{1}/login", Config.IPAddress, Config.HttpPort);
         }
+
     }
+
+
 }

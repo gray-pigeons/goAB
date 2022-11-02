@@ -4,6 +4,7 @@ import (
 	"fmt"
 	controller "goAB/controller"
 	data "goAB/database"
+	"goAB/server"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -11,7 +12,7 @@ import (
 )
 
 func main() {
-	// go server.InitTcpServer()
+	go server.InitTcpServer()
 	fmt.Println("1111-------------------")
 	data.InitDB()
 	// go client.InitClient()
