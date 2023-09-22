@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<item>
+    <version>10.0.0.0</version>
+    <url>http://127.0.0.1:8080/download/zip/updatemaster</url>
+    <changelog>http://127.0.0.1:8080/views/updatemaster</changelog>
+    <mandatory>true</mandatory>
+</item>
